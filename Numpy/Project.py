@@ -14,10 +14,16 @@ def is_pass(nums):
             pass_list[i] = 1
 
     return int(sum(pass_list))
-        
+
+def average_marks_to_percentages(marks):
+    grade = []
+    for i in marks[1:]:
+        temp = percentages(i)
+        grade.append(temp)
+
+    print("Average Grade Of students: ",grade)
 def topper(nums,names):
     sum = np.sum(nums[:,1:] , axis = 1)
-    print(sum)
     max = 0
     student_id = 0
     for i in range(len(sum)):
@@ -32,15 +38,15 @@ def topper_marks(list,nums,names):
     marks = list[1]
     row = student_id - 1
     marks_all_subject = nums[row]
-    print(marks)
-    print(marks_all_subject[1:])
-    print(names.get(student_id))
+    print("Topper Name is: ",names.get(student_id))
+    print("Topper Marks In All Subjects: ",marks_all_subject[1:])
+    
     grade = []
     for i in marks_all_subject[1:]:
         temp = percentages(i)
         grade.append(temp)
         
-    print(grade)
+    print("Topper Grade in all Subject: ",grade)
 
 def percentages(marks):
     if marks <= 100 and marks >= 90:
@@ -80,8 +86,35 @@ students_marks = np.array([
     [10, 48, 90, 31, 66, 22]])
 
 
-total_marks = np.sum(students_marks[:,1:],axis = 0)
-average_marks = total_marks // students_marks.shape[0]
-total_passed_students = is_pass(students_marks)
-print("Total Passes Student: ",total_passed_students)
-topper(students_marks,names)
+while True:
+    print("1. Average Marks: ")
+    print("2. Total Marks of all Student: ")
+    print("3. Topper: ")
+    print("4. Pass Count: ")
+    print("5. To Exit: ")
+    while True:
+        try:
+            choice = int(input("Enter Your Choice: "))
+            break
+        except:
+            print("Enter Only the Integer")
+    
+    match choice:
+        case 1:
+            total_marks = np.sum(students_marks[:,1:],axis = 0)
+            average_marks = total_marks // students_marks.shape[0]
+            print("Average Marks:             ",average_marks)
+            average_marks_to_percentages(average_marks)
+        case 2:
+            total_marks = np.sum(students_marks[:,1:],axis = 1)
+            print("Total Marks of the Every Students: ",total_marks)
+        case 3:
+            topper(students_marks,names)
+        case 4:
+            total_passed_students = is_pass(students_marks)
+            print("Total Passed Students is: ",total_passed_students)
+        case 5:
+            print("Thankyou For the Use")
+            break
+        case _:
+            print("Enter A Value from 1 to 5 only")
