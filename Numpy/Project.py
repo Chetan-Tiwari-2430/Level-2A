@@ -15,7 +15,44 @@ def is_pass(nums):
 
     return int(sum(pass_list))
         
+def topper(nums,names):
+    sum = np.sum(nums[:,1:] , axis = 1)
+    print(sum)
+    max = 0
+    student_id = 0
+    for i in range(len(sum)):
+        if sum[i] > max:
+            max = sum[i]
+            student_id = i + 1
+    list = [student_id,max]
+    topper_marks(list,nums,names)
+
+def topper_marks(list,nums,names):
+    student_id = list[0]
+    marks = list[1]
+    row = student_id - 1
+    marks_all_subject = nums[row]
+    print(marks)
+    print(marks_all_subject[1:])
+    print(names.get(student_id))
+    grade = []
+    for i in marks_all_subject[1:]:
+        temp = percentages(i)
+        grade.append(temp)
         
+    print(grade)
+
+def percentages(marks):
+    if marks <= 100 and marks >= 90:
+        return 'A+'
+    elif marks < 90 and marks >= 80:
+        return 'A'
+    elif marks < 80 and marks >= 60:
+        return 'B'
+    elif marks < 60 and marks >= 35:
+        return 'C'
+    else:
+        return "Fail"
 
 names = {
     1: "Aarav",
@@ -47,3 +84,4 @@ total_marks = np.sum(students_marks[:,1:],axis = 0)
 average_marks = total_marks // students_marks.shape[0]
 total_passed_students = is_pass(students_marks)
 print("Total Passes Student: ",total_passed_students)
+topper(students_marks,names)
